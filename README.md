@@ -1,1 +1,2 @@
-# learning-go
+
+hello from the terminal# learning-go
