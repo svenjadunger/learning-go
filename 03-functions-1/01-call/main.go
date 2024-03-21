@@ -3,6 +3,8 @@ package main
 import "fmt"
 
 func main() {
+	Hello()
+	Hello()
 }
 
 func Hello() {
