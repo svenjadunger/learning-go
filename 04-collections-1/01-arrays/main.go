@@ -4,9 +4,11 @@ import (
 	"fmt"
 )
 
-var roles = [2]string{
+var roles = [4]string{
 	"guest",
 	"user",
+	"moderator",
+	"admin",
 }
 
 func main() {
