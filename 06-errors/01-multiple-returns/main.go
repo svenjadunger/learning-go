@@ -10,3 +10,7 @@ func main() {
 
 	fmt.Println(x, y)
 }
+
+func Swap (x,y string) (string, string) {
+	return y,x
+}
