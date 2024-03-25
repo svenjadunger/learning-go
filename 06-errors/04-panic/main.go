@@ -16,6 +16,14 @@ func StoreMessage(m string) error {
 	return nil
 }
 
+func MustStoreMessage(message string) {
+	err := StoreMessage(message)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	MustStoreMessage("Hello!")
 }
