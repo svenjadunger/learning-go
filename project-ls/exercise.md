@@ -1,27 +1,24 @@
-# The "ls" Project
+# The "ls" Project: Errors
 
-The standard library provides the `strings` package that exposes functions to manipulate strings.
-For example, [`strings.Join`](https://pkg.go.dev/strings#Join).
-Click the link and take a look at what other functions there are.
-
-If you want to check a function from the standard library, visit [pkg.go.dev](https://pkg.go.dev/).
-You can also look up definitions directly in your IDE.
+*This exercise continues your previous "ls" project. You will work on the same files.*
 
 ## Exercise
 
 File: `project-ls/main.go`
 
-Your task is to implement a simple `ls` command that lists the contents of a directory.
-For now, you need to list just the `testdata` directory.
+`os.ReadDir` returns two values, the second one is an `error`. The current version ignores it.
 
-There's a ready to use `listFiles` function that returns a list of files from a directory.
-You need to call it with a proper argument.
-
-`listFiles` returns file names as a slice of strings.
-You need to print the returned list in one line in the following format:
-
-```bash
-backup.zip contacts.csv cv.doc photos
+```go
+files, _ := os.ReadDir(dirname)
 ```
 
-File names come correctly sorted. Use `strings.Join` to join the files with a space.
+Assign this error to an `err` variable and handle with `log.Fatal`.
+
+```go
+if err != nil {
+	log.Fatal(err)
+}
+```
+
+[`log.Fatal`](https://pkg.go.dev/log#Fatal) prints out the message and stops the application.
+It's a way to handle errors from which the application can't recover.
