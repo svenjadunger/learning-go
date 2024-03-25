@@ -1,7 +1,7 @@
 package main
 
 func DescribeNumber(x int) string {
-	if {
+	if x < 0{
 		return "negative"
 	}
 
