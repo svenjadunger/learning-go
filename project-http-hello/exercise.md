@@ -1,73 +1,35 @@
-# HTTP Server Project
+# HTTP Bad Request Project
 
-You're now going to start a new *project*. You'll improve it over a few exercises.
+*This exercise continues your previous HTTP project. You will work on the same files.*
 
-Some syntax will be new to you. Don't worry about it yet.
-For now, the point is to get you familiar with the general structure of an HTTP server.
+By default, an HTTP handler returns the `200 OK` status when any content is written to `http.ResponseWriter`.
 
-Follow the instructions and type code from the snippets. Eventually, you'll grasp all of it.
+You can write custom status codes using `w.WriteHeader`. 
+You need to do it before writing any content, otherwise it will have no effect.
 
-## The HTTP server
+See the list of HTTP codes on [pkg.go.dev](https://pkg.go.dev/net/http#pkg-constants).
 
-Go comes with a production-ready HTTP library. It's straightforward to run your own website or web application.
+### Returning from handlers
 
-To start an HTTP server, run in your `main` function:
+`w.WriteHeader` doesn't interrupt the execution of the handler function.
 
-```go
-http.HandleFunc("/your-endpoint", yourFunction)
-
-log.Fatal(http.ListenAndServe(":8080", nil))
-```
-
-You need to import `net/http` and `log` packages.
-Instead of writing one `import` statement per line, you can create a group:
+If you need to finish an HTTP request early, you need to explicitly use `return`.
 
 ```go
-import (
-	"net/http"
-	"log"
-)
-```
-
-Then, define the handler function:
-
-```go
-func yourFunction(w http.ResponseWriter, r *http.Request) {
-	// Handler function body
+func hello(w http.ResponseWriter, r *http.Request) {
+	// ...
+	
+	if thisShouldNotBeEmpty == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return // <- this is important!
+	}
+	
+	// With no return in place, this would be executed
 }
 ```
-
-To return a response, use `fmt.Fprint` with `http.ResponseWriter` as the first argument: 
-
-```go
-func yourFunction(w http.ResponseWriter, r *http.Request) {
-	name := "Peter"
-    fmt.Fprint(w, "Hello, my name is ", name)
-}
-```
-
-The server is started on the port you pass to `http.ListenAndServe`. It will run forever, until you close the application (by pressing Ctrl+C).
-In the example above, it will be available at [http://localhost:8080](http://localhost:8080).
-
-See detailed documentation at [pkg.go.dev](https://pkg.go.dev/net/http).
 
 ## Exercise
 
 File: `project-http-hello/main.go`
 
-Implement an HTTP server that runs on port 8080 and returns `Hello, [name]` from the `/hello` endpoint with `[name]` provided by the `name` query parameter.
-
-For example, visiting `http://localhost:8080/hello?name=Emma` should display `Hello, Emma`.
-
-To get the `name` parameter, use:
-
-```go
-name := r.URL.Query().Get("name")
-```
-
-You don't need to define the query parameter when calling `HandleFunc`.
-
-The server should be running on port `8080` (like in the example above).
-To see your server in action, visit [http://localhost:8080/hello](http://localhost:8080/hello) in your browser or in the terminal using `curl`.
-
-Add a `?name=` parameter with a name, and you should see a greeting.
+Return `http.StatusBadRequest` if the `name` query param is empty (equal to `""`).
