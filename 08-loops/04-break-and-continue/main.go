@@ -1,8 +1,25 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 func CountCreatedEvents(events []string) int {
-	return 0
+	count := 0
+
+	for _, event := range events {
+		if strings.HasSuffix(event, "_created") {
+			count++ 
+		} else if event == "client_deleted" {
+			break 
+		}
+		
+	}
+
+	return count
 }
+
 
 func main() {
 	events := []string{
@@ -18,5 +35,10 @@ func main() {
 		"order_updated",
 	}
 
-	CountCreatedEvents(events)
+
+	count := CountCreatedEvents(events)
+	fmt.Println("Anzahl der 'created' Ereignisse:", count)
 }
+
+	
+
