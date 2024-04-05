@@ -6,6 +6,11 @@ type Order struct {
 	Products []int
 }
 
+type User struct {
+	Name string
+	Orders []*Order
+}
+
 func main() {
 	firstOrder := Order{
 		Products: []int{545, 490},
