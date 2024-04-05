@@ -6,8 +6,12 @@ var (
 )
 
 func UpdateUser(newName *string, newPassword *string) {
-	Name = *newName
-	Password = *newPassword
+	if newName != nil {
+		Name = *newName
+	}
+	if newPassword != nil {
+		Password = *newPassword
+	}
 }
 
 func main() {
